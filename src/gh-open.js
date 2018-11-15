@@ -5,6 +5,7 @@
 const fs = require('fs');
 const path = require('path');
 const spawn = require('opn');
+const gitRootDir = require('git-root-dir');
 
 const SCRIPT_NAME = path.basename(__filename);
 const args = process.argv;
@@ -32,34 +33,9 @@ Example: ${SCRIPT_NAME} -p git_project/`;
   process.exit();
 }
 
-function findFile(file, baseDir) {
-  const resolvedPath = path.join(baseDir, file);
-
-  try {
-    fs.accessSync(resolvedPath, fs.constants.F_OK | fs.constants.R_OK);
-    return resolvedPath;
-  } catch (err) {
-    const higherDir = path.join(baseDir, '..');
-    try {
-      fs.accessSync(higherDir, fs.constants.F_OK | fs.constants.R_OK);
-      return findFile(file, higherDir);
-    } catch (err) {
-      return false;
-    }
-  }
-}
-
-function parseGitBranch(resolvedBaseDir) {
+function parseGitBranch(gitDir) {
   const gitBranchRegex = new RegExp('ref: refs/heads/(.*)$', 'mi');
-
-  let gitHeadFile = '.git/HEAD';
-  const foundFile = findFile(gitHeadFile, resolvedBaseDir);
-
-  if (foundFile) {
-    gitHeadFile = foundFile;
-  } else {
-    logError('Error: No git HEAD file found.');
-  }
+  const gitHeadFile = path.join(gitDir, '.git', 'HEAD');
 
   let gitHead;
 
@@ -79,16 +55,9 @@ function parseGitBranch(resolvedBaseDir) {
   return match[1];
 }
 
-function readGitConfig(resolvedBaseDir) {
+function readGitConfig(gitDir) {
   const gitConfigRegex = new RegExp('.*url = (.*)', 'mi');
-  let gitConfigFile = '.git/config';
-  const foundFile = findFile(gitConfigFile, resolvedBaseDir);
-
-  if (foundFile) {
-    gitConfigFile = foundFile;
-  } else {
-    logError('Error: No git config file found.');
-  }
+  const gitConfigFile = path.join(gitDir, '.git', 'config');
 
   let gitConfig;
 
@@ -108,10 +77,10 @@ function readGitConfig(resolvedBaseDir) {
   return match[1];
 }
 
-function getFullUrl(resolvedBaseDir) {
+function getFullUrl(gitDir) {
   const gitUrlRegex = new RegExp('^(?:[^:]+://|[^@]+@)([^:]+):((.+?))(?:\\.git)?/?$', 'i');
-  const rawUrl = readGitConfig(resolvedBaseDir);
-  const gitBranch = parseGitBranch(resolvedBaseDir);
+  const rawUrl = readGitConfig(gitDir);
+  const gitBranch = parseGitBranch(gitDir);
 
   const parsedUrl = rawUrl.replace(gitUrlRegex, 'https://$1/$2');
   const fullUrl = `${parsedUrl}/tree/${gitBranch}`;
@@ -142,11 +111,15 @@ for (let argIndex = 2; argIndex < args.length; argIndex++) {
 }
 
 const resolvedBaseDir = path.resolve(BASE_DIRECTORY);
+gitRootDir(resolvedBaseDir).then(gitDir => {
+  const fullUrl = getFullUrl(gitDir);
 
-const fullUrl = getFullUrl(resolvedBaseDir);
-
-if (PRINT_ONLY) {
-  console.info(fullUrl);
-} else {
-  spawn(fullUrl, {wait: false});
-}
+  if (PRINT_ONLY) {
+    console.info(fullUrl);
+  } else {
+    spawn(fullUrl, {wait: false});
+  }
+}).catch(error => {
+  logError(error);
+  logError('Could not find the git root directory.');
+});

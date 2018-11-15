@@ -4,6 +4,7 @@
     "gh-open": "src/gh-open.js"
   },
   "dependencies": {
+    "git-root-dir": "1.0.2",
     "opn": "5.4.0"
   },
   "devDependencies": {
