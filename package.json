@@ -13,7 +13,7 @@
   "description": "Open a GitHub repository in your browser",
   "license": "MIT",
   "main": "src/gh-open.js",
-  "name": "gh-open",
+  "name": "@ffflorian/gh-open",
   "repository": "git@github.com:ffflorian/gh-open.git",
   "scripts": {
     "prettier": "prettier --ignore-path .gitignore --write \"src/*.js\"",
