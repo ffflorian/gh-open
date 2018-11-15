@@ -111,7 +111,12 @@ for (let argIndex = 2; argIndex < args.length; argIndex++) {
 }
 
 const resolvedBaseDir = path.resolve(BASE_DIRECTORY);
+
 gitRootDir(resolvedBaseDir).then(gitDir => {
+  if (!gitDir) {
+    return Promise.reject('Could not find the git root directory.');
+  }
+
   const fullUrl = getFullUrl(gitDir);
 
   if (PRINT_ONLY) {
@@ -121,5 +126,4 @@ gitRootDir(resolvedBaseDir).then(gitDir => {
   }
 }).catch(error => {
   logError(error);
-  logError('Could not find the git root directory.');
 });
