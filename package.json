@@ -1,22 +1,33 @@
 {
   "author": "Florian Keller <github@floriankeller.de>",
   "bin": {
-    "gh-open": "src/gh-open.js"
+    "gh-open": "dist/gh-open.js"
   },
   "dependencies": {
-    "git-root-dir": "1.0.2",
+    "find-up": "3.0.0",
     "opn": "5.4.0"
   },
   "devDependencies": {
-    "prettier": "1.15.2"
+    "@types/find-up": "2.1.1",
+    "@types/node": "10.12.8",
+    "@types/opn": "5.1.0",
+    "prettier": "1.15.2",
+    "rimraf": "2.6.2",
+    "typescript": "3.1.6"
   },
   "description": "Open a GitHub repository in your browser",
+  "files": [
+    "dist"
+  ],
   "license": "MIT",
-  "main": "src/gh-open.js",
+  "main": "dist/gh-open.js",
   "name": "@ffflorian/gh-open",
-  "repository": "git@github.com:ffflorian/gh-open.git",
+  "repository": "https://github.com/ffflorian/gh-open",
   "scripts": {
-    "prettier": "prettier --ignore-path .gitignore --write \"src/*.js\"",
+    "build": "tsc",
+    "clear": "rimraf dist",
+    "dist": "yarn clear && yarn build",
+    "prettier": "prettier --ignore-path .gitignore --write \"src/*.ts\"",
     "test": "exit 0"
   },
   "version": "1.0.0"
