@@ -1,0 +1,21 @@
+{
+  "author": "Florian Keller <github@floriankeller.de>",
+  "bin": {
+    "gh-open": "src/gh-open.js"
+  },
+  "dependencies": {
+    "opn": "5.4.0"
+  },
+  "devDependencies": {
+    "prettier": "1.15.2"
+  },
+  "description": "Open a GitHub repository in your browser",
+  "license": "MIT",
+  "main": "src/gh-open.js",
+  "name": "gh-open",
+  "repository": "git@github.com:ffflorian/gh-open.git",
+  "scripts": {
+    "prettier": "prettier --ignore-path .gitignore --write \"src/*.js\""
+  },
+  "version": "1.0.0"
+}
