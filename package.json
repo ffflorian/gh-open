@@ -15,7 +15,8 @@
   "name": "gh-open",
   "repository": "git@github.com:ffflorian/gh-open.git",
   "scripts": {
-    "prettier": "prettier --ignore-path .gitignore --write \"src/*.js\""
+    "prettier": "prettier --ignore-path .gitignore --write \"src/*.js\"",
+    "test": "exit 0"
   },
   "version": "1.0.0"
 }
