@@ -54,22 +54,21 @@ for (let argIndex = 2; argIndex < args.length; argIndex++) {
 
 const resolvedBaseDir = path.resolve(options.baseDir);
 
-(async () => {
-  try {
-    const gitDir = await findUp('.git', {cwd: resolvedBaseDir});
-
+findUp('.git', {cwd: resolvedBaseDir})
+  .then(gitDir => {
     if (!gitDir) {
-      throw new Error('Could not find the git root directory.');
+      throw new Error(`Could not find a git repository in "${resolvedBaseDir}".`);
     }
-
-    const fullUrl = await getFullUrl(gitDir);
-
+    return getFullUrl(gitDir);
+  })
+  .then(fullUrl => {
     if (options.printOnly) {
       console.info(fullUrl);
     } else {
       opn(fullUrl, {wait: false});
     }
-  } catch (error) {
+  })
+  .catch(error => {
     console.error(error.message);
-  }
-})();
+    process.exit(1);
+  });

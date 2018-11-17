@@ -11,7 +11,7 @@ async function parseGitBranch(gitDir: string): Promise<string> {
   try {
     gitHead = await promisify(fs.readFile)(gitHeadFile, 'utf-8');
   } catch (error) {
-    const errorMessage = 'Could not find git HEAD file.';
+    const errorMessage = `Could not find git HEAD file in "${gitDir}".`;
     throw new Error(errorMessage);
   }
 
@@ -25,7 +25,7 @@ async function parseGitBranch(gitDir: string): Promise<string> {
   return match[1];
 }
 
-async function readGitConfig(gitDir: string): Promise<string> {
+async function parseGitConfig(gitDir: string): Promise<string> {
   const gitConfigRegex = new RegExp('.*url = (.*)', 'mi');
   const gitConfigFile = path.join(gitDir, 'config');
 
@@ -34,14 +34,14 @@ async function readGitConfig(gitDir: string): Promise<string> {
   try {
     gitConfig = await promisify(fs.readFile)(gitConfigFile, 'utf-8');
   } catch (error) {
-    const errorMessage = 'Could not find git config file.';
+    const errorMessage = `Could not find git config file in "${gitDir}".`;
     throw new Error(errorMessage);
   }
 
   const match = gitConfigRegex.exec(gitConfig);
 
   if (!match || !match[1]) {
-    const errorMessage = 'Error: No URL found in git config file.';
+    const errorMessage = 'No URL found in git config file.';
     throw new Error(errorMessage);
   }
 
@@ -50,17 +50,11 @@ async function readGitConfig(gitDir: string): Promise<string> {
 
 async function getFullUrl(gitDir: string): Promise<string> {
   const gitUrlRegex = new RegExp('^(?:[^:]+://|[^@]+@)([^:]+):((.+?))(?:\\.git)?/?$', 'i');
-  const rawUrl = await readGitConfig(gitDir);
+  const rawUrl = await parseGitConfig(gitDir);
   const gitBranch = await parseGitBranch(gitDir);
 
   const parsedUrl = rawUrl.replace(gitUrlRegex, 'https://$1/$2');
-  const fullUrl = `${parsedUrl}/tree/${gitBranch}`;
-
-  return fullUrl;
+  return `${parsedUrl}/tree/${gitBranch}`;
 }
 
-export {
-  getFullUrl,
-  parseGitBranch,
-  readGitConfig,
-}
+export {getFullUrl, parseGitBranch, parseGitConfig};
