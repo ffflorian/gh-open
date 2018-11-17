@@ -2,6 +2,10 @@
 
 Open a GitHub repository in your browser.
 
+### Installation
+
+Run `yarn global add @ffflorian/gh-open` or `npm install -g @ffflorian/gh-open`.
+
 ## Usage
 
 ```
@@ -15,10 +19,6 @@ Switches:
 
 Example: gh-open -p git_project/
 ```
-
-### Installation
-
-Run `yarn global add gh-open` or `npm install -g gh-open`.
 
 ## Build and test
 
