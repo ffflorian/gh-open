@@ -2,15 +2,17 @@
 
 import * as path from 'path';
 import * as findUp from 'find-up';
-import spawn = require('opn');
+import opn = require('opn');
 
 import {getFullUrl} from './gh-open';
 
 const SCRIPT_NAME = 'gh-open';
 const args = process.argv;
 
-let PRINT_ONLY = false;
-let BASE_DIRECTORY = './';
+const options = {
+  baseDir: './',
+  printOnly: false,
+};
 
 function displayHelp(): never {
   const usageText = `Usage: ${SCRIPT_NAME} [-h] [switch] [folder]
@@ -37,20 +39,20 @@ for (let argIndex = 2; argIndex < args.length; argIndex++) {
       break;
     case '-p':
     case '--print-only':
-      PRINT_ONLY = true;
+      options.printOnly = true;
       continue;
     default:
       if (arg.startsWith('-')) {
         console.error(`Invalid argument "${arg}".\n`);
         displayHelp();
       } else {
-        BASE_DIRECTORY = arg;
+        options.baseDir = arg;
       }
       break;
   }
 }
 
-const resolvedBaseDir = path.resolve(BASE_DIRECTORY);
+const resolvedBaseDir = path.resolve(options.baseDir);
 
 (async () => {
   try {
@@ -62,10 +64,10 @@ const resolvedBaseDir = path.resolve(BASE_DIRECTORY);
 
     const fullUrl = await getFullUrl(gitDir);
 
-    if (PRINT_ONLY) {
+    if (options.printOnly) {
       console.info(fullUrl);
     } else {
-      spawn(fullUrl, {wait: false});
+      opn(fullUrl, {wait: false});
     }
   } catch (error) {
     console.error(error.message);
