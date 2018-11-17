@@ -30,5 +30,5 @@
     "prettier": "prettier --ignore-path .gitignore --write \"src/*.ts\"",
     "test": "exit 0"
   },
-  "version": "1.0.2"
+  "version": "1.0.3"
 }
