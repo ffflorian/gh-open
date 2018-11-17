@@ -15,13 +15,13 @@ const options = {
 };
 
 function displayHelp(): never {
-  const usageText = `Usage: ${SCRIPT_NAME} [-h] [switch] [folder]
+  const usageText = `Usage: ${SCRIPT_NAME} [-h] [switch] [directory]
 
 Commands:
---help (-h)        Show help text
+--help (-h)   Show help text
 
 Switches:
---print-only (-p)  Just print the URL instead of opening a browser
+--print (-p)  Just print the URL
 
 Example: ${SCRIPT_NAME} -p git_project/`;
 

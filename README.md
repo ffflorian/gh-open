@@ -2,27 +2,20 @@
 
 Open a GitHub repository in your browser.
 
-### Installation
+## Installation
 
 Run `yarn global add @ffflorian/gh-open` or `npm install -g @ffflorian/gh-open`.
 
 ## Usage
 
 ```
-Usage: gh-open [-h] [switch] [folder]
+Usage: gh-open [-h] [switch] [directory]
 
 Commands:
---help (-h)        Show help text
+--help (-h)   Show help text
 
 Switches:
---print-only (-p)  Just print the URL instead of opening a browser
+--print (-p)  Just print the URL
 
 Example: gh-open -p git_project/
-```
-
-## Build and test
-
-```
-yarn
-yarn test
 ```
