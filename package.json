@@ -13,7 +13,7 @@
     "@types/opn": "5.1.0",
     "prettier": "1.15.3",
     "rimraf": "2.6.2",
-    "typescript": "3.2.1"
+    "typescript": "3.2.2"
   },
   "description": "Open a GitHub repository in your browser",
   "files": [
