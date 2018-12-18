@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import * as path from 'path';
 import * as findUp from 'find-up';
 import opn = require('opn');
+import * as path from 'path';
 
 import {getFullUrl} from './gh-open';
 
@@ -64,9 +64,10 @@ findUp('.git', {cwd: resolvedBaseDir})
   .then(fullUrl => {
     if (options.printOnly) {
       console.info(fullUrl);
-    } else {
-      opn(fullUrl, {wait: false});
+      return;
     }
+
+    return opn(fullUrl, {wait: false}).then(() => void 0);
   })
   .catch(error => {
     console.error(error.message);

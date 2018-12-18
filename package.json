@@ -13,6 +13,9 @@
     "@types/opn": "5.1.0",
     "prettier": "1.15.3",
     "rimraf": "2.6.2",
+    "tslint": "5.12.0",
+    "tslint-config-prettier": "1.17.0",
+    "tslint-plugin-prettier": "2.0.1",
     "typescript": "3.2.2"
   },
   "description": "Open a GitHub repository in your browser",
@@ -27,6 +30,9 @@
     "build": "tsc",
     "clear": "rimraf dist",
     "dist": "yarn clear && yarn build",
+    "lint": "yarn lint:ts && yarn lint:other",
+    "lint:other": "yarn prettier --list-different",
+    "lint:ts": "tslint --config tslint.json --project tsconfig.json \"**/*.ts\"",
     "prettier": "prettier --ignore-path .gitignore --write \"src/*.ts\"",
     "test": "exit 0"
   },
