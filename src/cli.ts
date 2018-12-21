@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import * as findUp from 'find-up';
+import * as fs from 'fs';
 import opn = require('opn');
 import * as path from 'path';
 
@@ -34,21 +35,33 @@ for (let argIndex = 2; argIndex < args.length; argIndex++) {
 
   switch (arg) {
     case '-h':
-    case '--help':
+    case '--help': {
       displayHelp();
       break;
+    }
     case '-p':
-    case '--print-only':
+    case '--print-only': {
       options.printOnly = true;
       continue;
-    default:
+    }
+    default: {
       if (arg.startsWith('-')) {
-        console.error(`Invalid argument "${arg}".\n`);
-        displayHelp();
+        let isDirectory = false;
+        try {
+          isDirectory = fs.statSync(arg).isDirectory();
+        } catch (error) {}
+
+        if (!isDirectory) {
+          console.error(`Invalid argument "${arg}".\n`);
+          displayHelp();
+        } else {
+          options.baseDir = arg;
+        }
       } else {
         options.baseDir = arg;
       }
       break;
+    }
   }
 }
 
