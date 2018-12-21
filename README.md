@@ -1,4 +1,4 @@
-# gh-open [![Build Status](https://api.travis-ci.org/ffflorian/gh-open.svg?branch=master)](https://travis-ci.org/ffflorian/gh-open/) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=ffflorian/gh-open)](https://dependabot.com)
+# gh-open [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=ffflorian/gh-open)](https://dependabot.com)
 
 Open a GitHub repository in your browser.
 
