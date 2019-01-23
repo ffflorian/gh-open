@@ -11,7 +11,7 @@
     "@types/find-up": "2.1.1",
     "@types/node": "10.12.10",
     "@types/opn": "5.1.0",
-    "prettier": "1.16.0",
+    "prettier": "1.16.1",
     "rimraf": "2.6.3",
     "tslint": "5.12.1",
     "tslint-config-prettier": "1.17.0",
