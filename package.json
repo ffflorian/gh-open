@@ -4,6 +4,7 @@
     "gh-open": "dist/cli.js"
   },
   "dependencies": {
+    "commander": "2.19.0",
     "find-up": "3.0.0",
     "opn": "5.4.0"
   },
