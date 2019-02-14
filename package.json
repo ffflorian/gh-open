@@ -23,6 +23,12 @@
   "files": [
     "dist"
   ],
+  "keywords": [
+    "cli",
+    "github",
+    "repository-tools",
+    "typescript"
+  ],
   "license": "MIT",
   "main": "dist/gh-open.js",
   "name": "@ffflorian/gh-open",
