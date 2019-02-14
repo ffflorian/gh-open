@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
-import * as findUp from 'find-up';
 import * as fs from 'fs';
-import opn = require('opn');
 import * as path from 'path';
+
+import * as findUp from 'find-up';
+import opn = require('opn');
 
 import {getFullUrl} from './gh-open';
 
@@ -19,10 +20,10 @@ function displayHelp(): never {
   const usageText = `Usage: ${SCRIPT_NAME} [-h] [switch] [directory]
 
 Commands:
---help (-h)   Show help text
+ --help (-h)   Show help text
 
 Switches:
---print (-p)  Just print the URL
+ --print (-p)  Just print the URL
 
 Example: ${SCRIPT_NAME} -p git_project/`;
 
