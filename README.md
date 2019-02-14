@@ -9,13 +9,12 @@ Run `yarn global add @ffflorian/gh-open` or `npm install -g @ffflorian/gh-open`.
 ## Usage
 
 ```
-Usage: gh-open [-h] [switch] [directory]
+Usage: gh-open [options] [directory]
 
-Commands:
---help (-h)   Show help text
+Open a GitHub repository in your browser
 
-Switches:
---print (-p)  Just print the URL
-
-Example: gh-open -p git_project/
+Options:
+  -p, --print    Just print the URL
+  -v, --version  output the version number
+  -h, --help     output usage information
 ```
