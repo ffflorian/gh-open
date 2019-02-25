@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-import * as path from 'path';
-import * as findUp from 'find-up';
 import * as program from 'commander';
+import * as findUp from 'find-up';
 import opn = require('opn');
+import * as path from 'path';
 
 import {getFullUrl} from './gh-open';
 
@@ -13,7 +13,7 @@ program
   .name(name.replace(/^@[^/]+\//, ''))
   .description(description)
   .option('-p, --print', 'Just print the URL', false)
-  .arguments('[directory]',)
+  .arguments('[directory]')
   .version(version, '-v, --version')
   .parse(process.argv);
 
