@@ -1,4 +1,4 @@
-# gh-open [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=ffflorian/gh-open)](https://dependabot.com)
+# gh-open [![npm version](https://img.shields.io/npm/v/@ffflorian/gh-open.svg?style=flat)](https://www.npmjs.com/package/@ffflorian/gh-open) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=ffflorian/gh-open)](https://dependabot.com)
 
 Open a GitHub repository in your browser.
 
