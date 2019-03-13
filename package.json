@@ -9,11 +9,14 @@
     "opn": "5.4.0"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "3.0.2",
+    "@semantic-release/git": "7.0.8",
     "@types/find-up": "2.1.1",
     "@types/node": "11.11.3",
     "@types/opn": "5.1.0",
     "prettier": "1.16.4",
     "rimraf": "2.6.3",
+    "semantic-release": "15.13.3",
     "tslint": "5.14.0",
     "tslint-config-prettier": "1.18.0",
     "tslint-plugin-prettier": "2.0.1",
@@ -41,7 +44,8 @@
     "lint:other": "yarn prettier --list-different",
     "lint:ts": "tslint --config tslint.json --project tsconfig.json \"**/*.ts\"",
     "prettier": "prettier --ignore-path .gitignore --write \"src/*.ts\"",
+    "release": "semantic-release",
     "test": "exit 0"
   },
-  "version": "1.1.1"
+  "version": "1.1.2"
 }
