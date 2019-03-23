@@ -5,14 +5,24 @@ import {promisify} from 'util';
 const readFileAsync = promisify(fs.readFile);
 
 const parser = {
-  fullUrl: new RegExp('^(?:.+?://(?:.+@)?|(?:.+@)?)(.+?)[:/](.+?)(?:.git)?/?$', 'i'),
-  gitBranch: new RegExp('ref: refs/heads/(.*)$', 'mi'),
-  gitConfig: new RegExp('.*url = (.*)', 'mi'),
+  fullUrl: {
+    position: 0,
+    regex: new RegExp('^(?:.+?://(?:.+@)?|(?:.+@)?)(.+?)[:/](.+?)(?:.git)?/?$', 'i'),
+  },
+  gitBranch: {
+    position: 1,
+    regex: new RegExp('ref: refs/heads/(.*)$', 'mi'),
+  },
+  rawUrl: {
+    position: 1,
+    regex: new RegExp('.*url = (.*)', 'mi'),
+  },
 };
 
-function parseRegex(str: string, regex: keyof typeof parser): string | null {
-  const match = parser[regex].exec(str);
-  return match && match[1] ? match[1] : null;
+function parseRegex(str: string, type: keyof typeof parser): string | null {
+  const {regex, position} = parser[type];
+  const match = regex.exec(str);
+  return match && match[position] ? match[position] : null;
 }
 
 async function parseGitBranch(gitDir: string): Promise<string> {
@@ -34,7 +44,7 @@ async function parseGitBranch(gitDir: string): Promise<string> {
     throw new Error(errorMessage);
   }
 
-  return match[1];
+  return match;
 }
 
 async function parseGitConfig(gitDir: string): Promise<string> {
@@ -49,14 +59,14 @@ async function parseGitConfig(gitDir: string): Promise<string> {
     throw new Error(errorMessage);
   }
 
-  const match = parseRegex(gitConfig, 'gitConfig');
+  const match = parseRegex(gitConfig, 'rawUrl');
 
   if (!match) {
     const errorMessage = 'No URL found in git config file.';
     throw new Error(errorMessage);
   }
 
-  return match[1];
+  return match;
 }
 
 async function getFullUrl(gitDir: string): Promise<string> {
@@ -69,7 +79,7 @@ async function getFullUrl(gitDir: string): Promise<string> {
     throw new Error(errorMessage);
   }
 
-  const parsedUrl = rawUrl.replace(parser.fullUrl, 'https://$1/$2');
+  const parsedUrl = rawUrl.replace(parser.fullUrl.regex, 'https://$1/$2');
 
   return `${parsedUrl}/tree/${gitBranch}`;
 }
