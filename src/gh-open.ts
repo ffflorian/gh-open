@@ -4,8 +4,18 @@ import {promisify} from 'util';
 
 const readFileAsync = promisify(fs.readFile);
 
+const parser = {
+  fullUrl: new RegExp('^(?:.+?://(?:.+@)?|(?:.+@)?)(.+?)[:/](.+?)(?:.git)?/?$', 'i'),
+  gitBranch: new RegExp('ref: refs/heads/(.*)$', 'mi'),
+  gitConfig: new RegExp('.*url = (.*)', 'mi'),
+};
+
+function parseRegex(str: string, regex: keyof typeof parser): string | null {
+  const match = parser[regex].exec(str);
+  return match && match[1] ? match[1] : null;
+}
+
 async function parseGitBranch(gitDir: string): Promise<string> {
-  const gitBranchRegex = new RegExp('ref: refs/heads/(.*)$', 'mi');
   const gitHeadFile = path.join(gitDir, 'HEAD');
 
   let gitHead;
@@ -17,9 +27,9 @@ async function parseGitBranch(gitDir: string): Promise<string> {
     throw new Error(errorMessage);
   }
 
-  const match = gitBranchRegex.exec(gitHead);
+  const match = parseRegex(gitHead, 'gitBranch');
 
-  if (!match || !match[1]) {
+  if (!match) {
     const errorMessage = 'No branch found in git HEAD file.';
     throw new Error(errorMessage);
   }
@@ -28,7 +38,6 @@ async function parseGitBranch(gitDir: string): Promise<string> {
 }
 
 async function parseGitConfig(gitDir: string): Promise<string> {
-  const gitConfigRegex = new RegExp('.*url = (.*)', 'mi');
   const gitConfigFile = path.join(gitDir, 'config');
 
   let gitConfig;
@@ -40,9 +49,9 @@ async function parseGitConfig(gitDir: string): Promise<string> {
     throw new Error(errorMessage);
   }
 
-  const match = gitConfigRegex.exec(gitConfig);
+  const match = parseRegex(gitConfig, 'gitConfig');
 
-  if (!match || !match[1]) {
+  if (!match) {
     const errorMessage = 'No URL found in git config file.';
     throw new Error(errorMessage);
   }
@@ -51,12 +60,18 @@ async function parseGitConfig(gitDir: string): Promise<string> {
 }
 
 async function getFullUrl(gitDir: string): Promise<string> {
-  const gitUrlRegex = new RegExp('^(?:[^:]+://|[^@]+@)([^:]+):((.+?))(?:\\.git)?/?$', 'i');
   const rawUrl = await parseGitConfig(gitDir);
   const gitBranch = await parseGitBranch(gitDir);
-  const parsedUrl = rawUrl.replace(gitUrlRegex, 'https://$1/$2');
+  const match = parseRegex(rawUrl, 'fullUrl');
+
+  if (!match) {
+    const errorMessage = 'Could not convert raw URL.';
+    throw new Error(errorMessage);
+  }
+
+  const parsedUrl = rawUrl.replace(parser.fullUrl, 'https://$1/$2');
 
   return `${parsedUrl}/tree/${gitBranch}`;
 }
 
-export {getFullUrl, parseGitBranch, parseGitConfig};
+export {getFullUrl, parseGitBranch, parseGitConfig, parseRegex, parser};

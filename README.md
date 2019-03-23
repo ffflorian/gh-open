@@ -18,3 +18,10 @@ Options:
   -v, --version  output the version number
   -h, --help     output usage information
 ```
+
+## Test
+
+```
+yarn
+yarn test
+```
