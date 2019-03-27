@@ -6,7 +6,7 @@
   "dependencies": {
     "commander": "2.19.0",
     "find-up": "3.0.0",
-    "opn": "5.5.0"
+    "opn": "6.0.0"
   },
   "devDependencies": {
     "@semantic-release/changelog": "3.0.2",
