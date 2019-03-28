@@ -2,7 +2,7 @@
 
 import * as program from 'commander';
 import * as findUp from 'find-up';
-import opn = require('opn');
+import open = require('open');
 import * as path from 'path';
 
 import {getFullUrl} from './gh-open';
@@ -32,7 +32,7 @@ findUp('.git', {cwd: resolvedBaseDir})
       return;
     }
 
-    return opn(fullUrl, {wait: false}).then(() => void 0);
+    return open(fullUrl).then(() => void 0);
   })
   .catch(error => {
     console.error(error.message);
