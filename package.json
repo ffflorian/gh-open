@@ -8,7 +8,9 @@
     "find-up": "3.0.0",
     "open": "6.1.0"
   },
+  "description": "Open a GitHub repository in your browser",
   "devDependencies": {
+    "@ffflorian/prettier-config": "0.0.3",
     "@semantic-release/changelog": "3.0.2",
     "@semantic-release/git": "7.0.8",
     "@types/find-up": "2.1.1",
@@ -27,7 +29,6 @@
     "tslint-plugin-prettier": "2.0.1",
     "typescript": "3.4.3"
   },
-  "description": "Open a GitHub repository in your browser",
   "files": [
     "dist"
   ],
@@ -39,21 +40,22 @@
   ],
   "license": "MIT",
   "lint-staged": {
-    "src/**/*.ts": [
-      "tslint --project tsconfig.json --fix",
+    "*.{json,md}": [
+      "prettier --write",
       "git add"
     ],
     "spec/**/*.ts": [
       "tslint --project tsconfig.jasmine.json --fix",
       "git add"
     ],
-    "*.{json,md}": [
-      "prettier --write",
+    "src/**/*.ts": [
+      "tslint --project tsconfig.json --fix",
       "git add"
     ]
   },
   "main": "dist/gh-open.js",
   "name": "@ffflorian/gh-open",
+  "prettier": "@ffflorian/prettier-config",
   "repository": "https://github.com/ffflorian/gh-open.git",
   "scripts": {
     "build": "tsc",
