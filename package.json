@@ -6,7 +6,7 @@
   "dependencies": {
     "commander": "2.20.0",
     "find-up": "3.0.0",
-    "open": "6.2.0"
+    "open": "6.3.0"
   },
   "description": "Open a GitHub repository in your browser",
   "devDependencies": {
