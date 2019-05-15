@@ -11,7 +11,7 @@
   "description": "Open a GitHub repository in your browser",
   "devDependencies": {
     "@ffflorian/prettier-config": "0.0.3",
-    "@ffflorian/tslint-config": "0.1.0",
+    "@ffflorian/tslint-config": "0.2.0",
     "@semantic-release/changelog": "3.0.2",
     "@semantic-release/git": "7.0.8",
     "@types/find-up": "2.1.1",
