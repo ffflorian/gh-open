@@ -1,3 +1,9 @@
+# [1.2.0](https://github.com/ffflorian/gh-open/compare/v1.1.3...v1.2.0) (2019-05-27)
+
+### Features
+
+- Force release ([d5b7f69](https://github.com/ffflorian/gh-open/commit/d5b7f69))
+
 ## [1.1.3](https://github.com/ffflorian/gh-open/compare/v1.1.2...v1.1.3) (2019-03-23)
 
 ### Bug Fixes
