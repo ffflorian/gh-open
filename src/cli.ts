@@ -19,7 +19,7 @@ program
 
 const resolvedBaseDir = path.resolve(program.args[0] || '.');
 
-findUp('.git', {cwd: resolvedBaseDir})
+findUp('.git', {cwd: resolvedBaseDir, type: 'directory'})
   .then(gitDir => {
     if (!gitDir) {
       throw new Error(`Could not find a git repository in "${resolvedBaseDir}".`);
