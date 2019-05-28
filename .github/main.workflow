@@ -8,13 +8,19 @@ workflow "Build, lint and test" {
   ]
 }
 
-action "Don't skip CI" {
+action "Skip CI check" {
   uses = "ffflorian/actions/skip-ci-check@v1.0.0"
+}
+
+action "Normal push check" {
+  uses = "actions/bin/filter@master"
+  needs = "Skip CI check"
+  args = "not deleted_branch"
 }
 
 action "Install dependencies" {
   uses = "ffflorian/actions/git-node@v1.0.0"
-  needs = "Don't skip CI"
+  needs = "Normal push check"
   runs = "yarn"
 }
 
