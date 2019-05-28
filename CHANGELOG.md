@@ -1,3 +1,9 @@
+## [1.2.1](https://github.com/ffflorian/gh-open/compare/v1.2.0...v1.2.1) (2019-05-28)
+
+### Bug Fixes
+
+- Use directory option in find-up ([e0729de](https://github.com/ffflorian/gh-open/commit/e0729de))
+
 # [1.2.0](https://github.com/ffflorian/gh-open/compare/v1.1.3...v1.2.0) (2019-05-27)
 
 ### Features
