@@ -1,3 +1,9 @@
+# [1.3.0](https://github.com/ffflorian/gh-open/compare/v1.2.1...v1.3.0) (2019-06-12)
+
+### Features
+
+- Omit dist directory ([9c079d2](https://github.com/ffflorian/gh-open/commit/9c079d2))
+
 ## [1.2.1](https://github.com/ffflorian/gh-open/compare/v1.2.0...v1.2.1) (2019-05-28)
 
 ### Bug Fixes
