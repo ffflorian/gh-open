@@ -1,3 +1,9 @@
+## [1.3.1](https://github.com/ffflorian/gh-open/compare/v1.3.0...v1.3.1) (2019-06-13)
+
+### Bug Fixes
+
+- package.json path in CLI ([0bd35c4](https://github.com/ffflorian/gh-open/commit/0bd35c4))
+
 # [1.3.0](https://github.com/ffflorian/gh-open/compare/v1.2.1...v1.3.0) (2019-06-12)
 
 ### Features
