@@ -2,12 +2,19 @@
 
 import * as program from 'commander';
 import * as findUp from 'find-up';
+import * as fs from 'fs';
 import open = require('open');
 import * as path from 'path';
 
 import {getFullUrl} from './gh-open';
 
-const {name, version, description}: {name: string; version: string; description: string} = require('../package.json');
+const defaultPackageJsonPath = path.join(__dirname, 'package.json');
+const packageJsonPath = fs.existsSync(defaultPackageJsonPath)
+  ? defaultPackageJsonPath
+  : path.join(__dirname, '../package.json');
+
+const packageJson = fs.readFileSync(packageJsonPath, 'utf-8');
+const {description, name, version}: {description: string; name: string; version: string} = JSON.parse(packageJson);
 
 program
   .name(name.replace(/^@[^/]+\//, ''))
