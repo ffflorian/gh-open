@@ -11,6 +11,7 @@
   "description": "Open a GitHub repository in your browser",
   "devDependencies": {
     "@ffflorian/prettier-config": "0.0.5",
+    "@ffflorian/semantic-release-config": "0.1.0",
     "@ffflorian/tslint-config": "0.2.2",
     "@semantic-release/changelog": "3.0.4",
     "@semantic-release/git": "7.0.12",
@@ -63,6 +64,9 @@
   "main": "dist/gh-open.js",
   "name": "@ffflorian/gh-open",
   "prettier": "@ffflorian/prettier-config",
+  "release": {
+    "extends": "@ffflorian/semantic-release-config"
+  },
   "repository": "https://github.com/ffflorian/gh-open.git",
   "scripts": {
     "build": "tsc",
