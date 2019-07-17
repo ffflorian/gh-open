@@ -1,3 +1,13 @@
+# [2.0.0](https://github.com/ffflorian/gh-open/compare/v1.3.2...v2.0.0) (2019-07-17)
+
+### Features
+
+- Set ES6 as target and require Node >= 10.9 ([#134](https://github.com/ffflorian/gh-open/issues/134)) ([97b6509](https://github.com/ffflorian/gh-open/commit/97b6509))
+
+### BREAKING CHANGES
+
+- Node.js >= 10.9 is required.
+
 ## [1.3.2](https://github.com/ffflorian/gh-open/compare/v1.3.1...v1.3.2) (2019-07-07)
 
 ### Bug Fixes
