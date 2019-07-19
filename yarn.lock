@@ -274,13 +274,6 @@
   resolved "https://registry.npmjs.org/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
   integrity sha512-f5j5b/Gf71L+dbqxIpQ4Z2WlmI/mPJ0fOkGGmFgtb6sAu97EPczzbS3/tJKxmcYDj55OX6ssqwDAWOHIYDRDGA==
 
-"@types/open@6.1.0":
-  version "6.1.0"
-  resolved "https://registry.npmjs.org/@types/open/-/open-6.1.0.tgz#3cdf3db197a6a5d823babe6effeed243fad5d28a"
-  integrity sha512-sdB0OltczakZfdn5DYg3ZbHoQeYtU8Vbo4dys0U98gikn++M4gGDI02dzEWXPMP5uXGSjGx9GnK/yLlJMfGjlg==
-  dependencies:
-    "@types/node" "*"
-
 JSONStream@^1.0.4, JSONStream@^1.3.4, JSONStream@^1.3.5:
   version "1.3.5"
   resolved "https://registry.npmjs.org/JSONStream/-/JSONStream-1.3.5.tgz#3208c1f08d3a4d99261ab64f92302bc15e111ca0"
