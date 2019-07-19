@@ -240,10 +240,12 @@
   resolved "https://registry.npmjs.org/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
   integrity sha512-EaObqwIvayI5a8dCzhFrjKzVwKLxjoG9T6Ppd5CEo07LRKfQ8Yokw54r5+Wq7FaBQ+yXRvQAYPrHwya1/UFt9g==
 
-"@types/find-up@2.1.1":
-  version "2.1.1"
-  resolved "https://registry.npmjs.org/@types/find-up/-/find-up-2.1.1.tgz#1cd2d240f1ad1f48d32346074724dc3107248a11"
-  integrity sha512-60LC501bQRN9/3yfVaEEMd7IndaufffL56PBRAejPpUrY304Ps1jfnjNqPw5jmM5R8JHWiKBAe5IHzNcPV41AA==
+"@types/find-up@4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@types/find-up/-/find-up-4.0.0.tgz#6b74a76670477a23f0793cfaf2dafc86df59723a"
+  integrity sha512-QlRNKeOPFWKisbNtKVOOGXw3AeLbkw8UmT/EyEGM6brfqpYffKBcch7f1y40NYN9O90aK2+K0xBMDJfOAsg2qg==
+  dependencies:
+    find-up "*"
 
 "@types/glob@^7.1.1":
   version "7.1.1"
@@ -1721,7 +1723,7 @@ find-npm-prefix@^1.0.2:
   resolved "https://registry.npmjs.org/find-npm-prefix/-/find-npm-prefix-1.0.2.tgz#8d8ce2c78b3b4b9e66c8acc6a37c231eb841cfdf"
   integrity sha512-KEftzJ+H90x6pcKtdXZEPsQse8/y/UnvzRKrOSQFprnrGaFuJ62fVkP34Iu2IYuMvyauCyoLTNkJZgrrGA2wkA==
 
-find-up@4.1.0, find-up@^4.0.0:
+find-up@*, find-up@4.1.0, find-up@^4.0.0:
   version "4.1.0"
   resolved "https://registry.npmjs.org/find-up/-/find-up-4.1.0.tgz#97afe7d6cdc0bc5928584b7c8d7b16e8a9aa5d19"
   integrity sha512-PpOwAdQ/YlXQ2vj8a3h8IipDuYRi3wceVQQGYWxNINccq40Anw7BlsEXCMbt1Zt+OLA6Fq9suIpIWD0OsnISlw==
