@@ -50,7 +50,7 @@
   ],
   "license": "MIT",
   "lint-staged": {
-    "*.{json,md}": [
+    "*.{json,md,yml}": [
       "prettier --write",
       "git add"
     ],
@@ -83,7 +83,7 @@
     "lint:ts": "tslint --project tsconfig.json",
     "lint:ts:spec": "tslint --project tsconfig.jasmine.json",
     "postpublish": "node ../node_modules/publish-flat/cli-copy.js -i package.json -o ../package.json version",
-    "prettier": "prettier \"*.{json,md}\"",
+    "prettier": "prettier \"*.{json,md,yml}\"",
     "release": "semantic-release",
     "start": "ts-node src/cli.ts",
     "test": "ts-node -P tsconfig.jasmine.json node_modules/.bin/jasmine"

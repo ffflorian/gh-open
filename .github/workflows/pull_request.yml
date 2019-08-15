@@ -1,0 +1,18 @@
+name: Pull request
+
+on: pull_request
+
+jobs:
+  build_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ffflorian/actions/skip-ci-check@master
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+      - run: |
+          yarn
+          yarn lint
+          yarn test
+          yarn dist
