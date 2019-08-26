@@ -1,3 +1,9 @@
+# [2.1.0](https://github.com/ffflorian/gh-open/compare/v2.0.0...v2.1.0) (2019-08-26)
+
+### Features
+
+- Open pull request ([#164](https://github.com/ffflorian/gh-open/issues/164)) ([902d595](https://github.com/ffflorian/gh-open/commit/902d595))
+
 # [2.0.0](https://github.com/ffflorian/gh-open/compare/v1.3.2...v2.0.0) (2019-07-17)
 
 ### Features
