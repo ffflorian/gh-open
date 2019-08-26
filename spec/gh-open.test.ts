@@ -1,12 +1,12 @@
-import {parseRegex, parser} from '../src/gh-open';
+import {parser} from '../src/gh-open';
 
 describe('getFullUrl', () => {
   const normalizedUrl = 'https://github.com/ffflorian/gh-open';
 
   const testRegex = (str: string) => {
-    const match = parseRegex(str, 'fullUrl');
-    expect(match).toEqual(jasmine.any(String));
-    const replaced = str.replace(parser.fullUrl.regex, 'https://$1/$2');
+    const match = parser.fullUrl.exec(str);
+    expect(match![0]).toEqual(jasmine.any(String));
+    const replaced = str.replace(parser.fullUrl, 'https://$1/$2');
     expect(replaced).toBe(normalizedUrl);
   };
 
@@ -50,8 +50,8 @@ describe('parseGitConfig', () => {
   const rawUrl = 'git@github.com:ffflorian/gh-open.git';
 
   const testRegex = (str: string) => {
-    const match = parseRegex(str, 'rawUrl');
-    expect(match).toBe(rawUrl);
+    const match = parser.rawUrl.exec(str);
+    expect(match!.groups!.rawUrl).toBe(rawUrl);
   };
 
   it('converts a normal git config', () => {
@@ -66,8 +66,8 @@ describe('parseGitConfig', () => {
 
   describe('parseGitBranch', () => {
     const testRegex = (str: string, result: string) => {
-      const match = parseRegex(str, 'gitBranch');
-      expect(match).toBe(result);
+      const match = parser.gitBranch.exec(str);
+      expect(match!.groups!.branch).toBe(result);
     };
 
     it('detects the master branch', () => {
