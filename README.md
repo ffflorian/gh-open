@@ -11,10 +11,11 @@ Run `yarn global add @ffflorian/gh-open` or `npm install -g @ffflorian/gh-open`.
 ```
 Usage: gh-open [options] [directory]
 
-Open a GitHub repository in your browser
+Open a GitHub repository in your browser. Opens pull requests by default.
 
 Options:
   -p, --print    Just print the URL
+  -t, --tree     Open the branch tree (and not the PR)
   -v, --version  output the version number
   -h, --help     output usage information
 ```

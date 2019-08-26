@@ -20,7 +20,7 @@ program
   .name(name.replace(/^@[^/]+\//, ''))
   .description(description)
   .option('-p, --print', 'Just print the URL')
-  .option('-r, --pull-request', 'Get the pull request for the branch')
+  .option('-t, --tree', 'Open the branch tree (and not the PR)')
   .arguments('[directory]')
   .version(version, '-v, --version')
   .parse(process.argv);
@@ -35,12 +35,10 @@ const resolvedBaseDir = path.resolve(program.args[0] || '.');
 
   let fullUrl = await getFullUrl(gitDir);
 
-  if (program.pullRequest) {
+  if (!program.tree) {
     const pullRequestUrl = await getPullRequest(fullUrl);
     if (pullRequestUrl) {
       fullUrl = pullRequestUrl;
-    } else {
-      console.info('No pull request found.');
     }
   }
 
