@@ -1,10 +1,7 @@
-import * as fs from 'fs';
+import {promises as fsAsync} from 'fs';
 import * as path from 'path';
-import {promisify} from 'util';
 
-const readFileAsync = promisify(fs.readFile);
-
-const parser = {
+export const parser = {
   fullUrl: {
     position: 0,
     regex: new RegExp('^(?:.+?://(?:.+@)?|(?:.+@)?)(.+?)[:/](.+?)(?:.git)?/?$', 'i'),
@@ -19,19 +16,19 @@ const parser = {
   },
 };
 
-function parseRegex(str: string, type: keyof typeof parser): string | null {
+export function parseRegex(str: string, type: keyof typeof parser): string | null {
   const {regex, position} = parser[type];
   const match = regex.exec(str);
   return match && match[position] ? match[position] : null;
 }
 
-async function parseGitBranch(gitDir: string): Promise<string> {
+export async function parseGitBranch(gitDir: string): Promise<string> {
   const gitHeadFile = path.join(gitDir, 'HEAD');
 
-  let gitHead;
+  let gitHead: string;
 
   try {
-    gitHead = await readFileAsync(gitHeadFile, 'utf-8');
+    gitHead = await fsAsync.readFile(gitHeadFile, 'utf-8');
   } catch (error) {
     const errorMessage = `Could not find git HEAD file in "${gitDir}".`;
     throw new Error(errorMessage);
@@ -47,13 +44,13 @@ async function parseGitBranch(gitDir: string): Promise<string> {
   return match;
 }
 
-async function parseGitConfig(gitDir: string): Promise<string> {
+export async function parseGitConfig(gitDir: string): Promise<string> {
   const gitConfigFile = path.join(gitDir, 'config');
 
   let gitConfig;
 
   try {
-    gitConfig = await readFileAsync(gitConfigFile, 'utf-8');
+    gitConfig = await fsAsync.readFile(gitConfigFile, 'utf-8');
   } catch (error) {
     const errorMessage = `Could not find git config file in "${gitDir}".`;
     throw new Error(errorMessage);
@@ -69,7 +66,7 @@ async function parseGitConfig(gitDir: string): Promise<string> {
   return match;
 }
 
-async function getFullUrl(gitDir: string): Promise<string> {
+export async function getFullUrl(gitDir: string): Promise<string> {
   const rawUrl = await parseGitConfig(gitDir);
   const gitBranch = await parseGitBranch(gitDir);
   const match = parseRegex(rawUrl, 'fullUrl');
@@ -83,5 +80,3 @@ async function getFullUrl(gitDir: string): Promise<string> {
 
   return `${parsedUrl}/tree/${gitBranch}`;
 }
-
-export {getFullUrl, parseGitBranch, parseGitConfig, parseRegex, parser};
