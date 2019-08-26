@@ -4,11 +4,12 @@
     "gh-open": "dist/cli.js"
   },
   "dependencies": {
+    "axios": "0.19.0",
     "commander": "3.0.0",
     "find-up": "4.1.0",
     "open": "6.4.0"
   },
-  "description": "Open a GitHub repository in your browser",
+  "description": "Open a GitHub repository in your browser. Opens pull requests by default.",
   "devDependencies": {
     "@ffflorian/prettier-config": "0.0.5",
     "@ffflorian/semantic-release-config": "0.1.2",

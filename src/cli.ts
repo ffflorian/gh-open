@@ -6,7 +6,7 @@ import * as fs from 'fs';
 import open = require('open');
 import * as path from 'path';
 
-import {getFullUrl} from './gh-open';
+import {getFullUrl, getPullRequest} from './gh-open';
 
 const defaultPackageJsonPath = path.join(__dirname, 'package.json');
 const packageJsonPath = fs.existsSync(defaultPackageJsonPath)
@@ -19,29 +19,36 @@ const {description, name, version}: {description: string; name: string; version:
 program
   .name(name.replace(/^@[^/]+\//, ''))
   .description(description)
-  .option('-p, --print', 'Just print the URL', false)
+  .option('-p, --print', 'Just print the URL')
+  .option('-t, --tree', 'Open the branch tree (and not the PR)')
   .arguments('[directory]')
   .version(version, '-v, --version')
   .parse(process.argv);
 
 const resolvedBaseDir = path.resolve(program.args[0] || '.');
 
-findUp('.git', {cwd: resolvedBaseDir, type: 'directory'})
-  .then(gitDir => {
-    if (!gitDir) {
-      throw new Error(`Could not find a git repository in "${resolvedBaseDir}".`);
-    }
-    return getFullUrl(gitDir);
-  })
-  .then(fullUrl => {
-    if (program.print) {
-      console.info(fullUrl);
-      return;
-    }
+(async () => {
+  const gitDir = await findUp('.git', {cwd: resolvedBaseDir, type: 'directory'});
+  if (!gitDir) {
+    throw new Error(`Could not find a git repository in "${resolvedBaseDir}".`);
+  }
 
-    return open(fullUrl).then(() => void 0);
-  })
-  .catch(error => {
-    console.error(error.message);
-    process.exit(1);
-  });
+  let fullUrl = await getFullUrl(gitDir);
+
+  if (!program.tree) {
+    const pullRequestUrl = await getPullRequest(fullUrl);
+    if (pullRequestUrl) {
+      fullUrl = pullRequestUrl;
+    }
+  }
+
+  if (program.print) {
+    console.info(fullUrl);
+    return;
+  }
+
+  await open(fullUrl);
+})().catch(error => {
+  console.error(error.message);
+  process.exit(1);
+});

@@ -1,26 +1,16 @@
 import {promises as fsAsync} from 'fs';
 import * as path from 'path';
 
-export const parser = {
-  fullUrl: {
-    position: 0,
-    regex: new RegExp('^(?:.+?://(?:.+@)?|(?:.+@)?)(.+?)[:/](.+?)(?:.git)?/?$', 'i'),
-  },
-  gitBranch: {
-    position: 1,
-    regex: new RegExp('ref: refs/heads/(.*)$', 'mi'),
-  },
-  rawUrl: {
-    position: 1,
-    regex: new RegExp('.*url = (.*)', 'mi'),
-  },
-};
+import {GitHubClient} from './GitHubClient';
 
-export function parseRegex(str: string, type: keyof typeof parser): string | null {
-  const {regex, position} = parser[type];
-  const match = regex.exec(str);
-  return match && match[position] ? match[position] : null;
-}
+const gitHubClient = new GitHubClient();
+
+export const parser = {
+  fullUrl: new RegExp('^(?:.+?://(?:.+@)?|(?:.+@)?)(.+?)[:/](.+?)(?:.git)?/?$', 'i'),
+  gitBranch: new RegExp('ref: refs/heads/(?<branch>.*)$', 'mi'),
+  pullRequest: new RegExp('github\\.com\\/(?<user>[^\\/]+)\\/(?<project>[^/]+)\\/tree\\/(?<branch>.*)'),
+  rawUrl: new RegExp('.*url = (?<rawUrl>.*)', 'mi'),
+};
 
 export async function parseGitBranch(gitDir: string): Promise<string> {
   const gitHeadFile = path.join(gitDir, 'HEAD');
@@ -34,14 +24,14 @@ export async function parseGitBranch(gitDir: string): Promise<string> {
     throw new Error(errorMessage);
   }
 
-  const match = parseRegex(gitHead, 'gitBranch');
+  const match = parser.gitBranch.exec(gitHead);
 
-  if (!match) {
+  if (!match || !match.groups) {
     const errorMessage = 'No branch found in git HEAD file.';
     throw new Error(errorMessage);
   }
 
-  return match;
+  return match.groups.branch;
 }
 
 export async function parseGitConfig(gitDir: string): Promise<string> {
@@ -56,27 +46,45 @@ export async function parseGitConfig(gitDir: string): Promise<string> {
     throw new Error(errorMessage);
   }
 
-  const match = parseRegex(gitConfig, 'rawUrl');
+  const match = parser.rawUrl.exec(gitConfig);
 
-  if (!match) {
+  if (!match || !match.groups) {
     const errorMessage = 'No URL found in git config file.';
     throw new Error(errorMessage);
   }
 
-  return match;
+  return match.groups.rawUrl;
 }
 
 export async function getFullUrl(gitDir: string): Promise<string> {
   const rawUrl = await parseGitConfig(gitDir);
   const gitBranch = await parseGitBranch(gitDir);
-  const match = parseRegex(rawUrl, 'fullUrl');
+  const match = parser.fullUrl.exec(rawUrl);
 
   if (!match) {
     const errorMessage = 'Could not convert raw URL.';
     throw new Error(errorMessage);
   }
 
-  const parsedUrl = rawUrl.replace(parser.fullUrl.regex, 'https://$1/$2');
+  const parsedUrl = rawUrl.replace(parser.fullUrl, 'https://$1/$2');
 
   return `${parsedUrl}/tree/${gitBranch}`;
+}
+
+export async function getPullRequest(url: string): Promise<string> {
+  const match = parser.pullRequest.exec(url);
+
+  if (!match || !match.groups) {
+    const errorMessage = 'Could not convert GitHub URL to pull request.';
+    throw new Error(errorMessage);
+  }
+
+  const {user, project, branch} = match.groups;
+  const pullRequest = await gitHubClient.getPullRequestByBranch(user, project, branch);
+
+  if (!pullRequest) {
+    return '';
+  }
+
+  return pullRequest._links.html.href;
 }
