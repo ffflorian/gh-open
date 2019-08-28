@@ -80,7 +80,13 @@ export async function getPullRequest(url: string): Promise<string> {
   }
 
   const {user, project, branch} = match.groups;
-  const pullRequest = await gitHubClient.getPullRequestByBranch(user, project, branch);
+  let pullRequest;
+
+  try {
+    pullRequest = await gitHubClient.getPullRequestByBranch(user, project, branch);
+  } catch (error) {
+    console.warn(error.message);
+  }
 
   if (!pullRequest) {
     return '';
