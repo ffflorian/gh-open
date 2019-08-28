@@ -1,3 +1,9 @@
+## [2.1.1](https://github.com/ffflorian/gh-open/compare/v2.1.0...v2.1.1) (2019-08-28)
+
+### Bug Fixes
+
+- Still open after get request failed ([ed808a9](https://github.com/ffflorian/gh-open/commit/ed808a9))
+
 # [2.1.0](https://github.com/ffflorian/gh-open/compare/v2.0.0...v2.1.0) (2019-08-26)
 
 ### Features
