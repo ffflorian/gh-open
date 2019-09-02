@@ -20,7 +20,8 @@ program
   .name(name.replace(/^@[^/]+\//, ''))
   .description(description)
   .option('-p, --print', 'Just print the URL')
-  .option('-t, --tree', 'Open the branch tree (and not the PR)')
+  .option('-b, --branch', 'Open the branch tree (and not the PR)')
+  .option('-t, --timeout', 'Set a custom timeout for HTTP requests')
   .arguments('[directory]')
   .version(version, '-v, --version')
   .parse(process.argv);
@@ -35,7 +36,7 @@ const resolvedBaseDir = path.resolve(program.args[0] || '.');
 
   let fullUrl = await getFullUrl(gitDir);
 
-  if (!program.tree) {
+  if (!program.branch) {
     const pullRequestUrl = await getPullRequest(fullUrl);
     if (pullRequestUrl) {
       fullUrl = pullRequestUrl;

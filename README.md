@@ -15,7 +15,8 @@ Open a GitHub repository in your browser. Opens pull requests by default.
 
 Options:
   -p, --print    Just print the URL
-  -t, --tree     Open the branch tree (and not the PR)
+  -b, --branch   Open the branch tree (and not the PR)
+  -t, --timeout  Set a custom timeout for HTTP requests
   -v, --version  output the version number
   -h, --help     output usage information
 ```

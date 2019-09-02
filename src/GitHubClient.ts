@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosInstance} from 'axios';
 
 export interface PullRequest {
   _links: {
@@ -9,33 +9,30 @@ export interface PullRequest {
   head: {
     ref: string;
   };
-  id: string;
 }
 
 export class GitHubClient {
-  private readonly baseUrl: string;
+  private readonly apiClient: AxiosInstance;
 
-  constructor() {
-    this.baseUrl = 'https://api.github.com';
+  constructor(timeout: number = 2000) {
+    this.apiClient = axios.create({baseURL: 'https://api.github.com', timeout});
   }
 
-  async getPullRequestByBranch(user: string, project: string, branch: string): Promise<PullRequest | undefined> {
-    const pullRequests = await this.getPullRequests(user, project);
-    return pullRequests.find(pr => pr.head.ref === branch);
+  async getPullRequestByBranch(user: string, repository: string, branch: string): Promise<PullRequest | undefined> {
+    const pullRequests = await this.getPullRequests(user, repository);
+    return pullRequests.find(pr => !!pr.head && pr.head.ref === branch);
   }
 
   /**
    * @see https://developer.github.com/v3/pulls/#list-pull-requests
    */
-  async getPullRequests(user: string, project: string): Promise<PullRequest[]> {
-    const resourceUrl = `${this.baseUrl}/repos/${user}/${project}/pulls`;
+  async getPullRequests(user: string, repository: string): Promise<PullRequest[]> {
+    const resourceUrl = `repos/${user}/${repository}/pulls`;
 
-    const response = await axios.request({
-      method: 'get',
+    const response = await this.apiClient.get(resourceUrl, {
       params: {
         state: 'open',
       },
-      url: resourceUrl,
     });
 
     return response.data;
