@@ -21,7 +21,7 @@ program
   .description(description)
   .option('-p, --print', 'Just print the URL')
   .option('-b, --branch', 'Open the branch tree (and not the PR)')
-  .option('-t, --timeout', 'Set a custom timeout for HTTP requests')
+  .option('-t, --timeout <number>', 'Set a custom timeout for HTTP requests')
   .arguments('[directory]')
   .version(version, '-v, --version')
   .parse(process.argv);
@@ -37,7 +37,7 @@ const resolvedBaseDir = path.resolve(program.args[0] || '.');
   let fullUrl = await getFullUrl(gitDir);
 
   if (!program.branch) {
-    const pullRequestUrl = await getPullRequest(fullUrl);
+    const pullRequestUrl = await getPullRequest(fullUrl, program.timeout);
     if (pullRequestUrl) {
       fullUrl = pullRequestUrl;
     }
