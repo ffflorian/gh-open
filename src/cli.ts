@@ -6,7 +6,7 @@ import * as fs from 'fs';
 import open = require('open');
 import * as path from 'path';
 
-import {getFullUrl, getPullRequest} from './gh-open';
+import {OpenService} from './OpenService';
 
 const defaultPackageJsonPath = path.join(__dirname, 'package.json');
 const packageJsonPath = fs.existsSync(defaultPackageJsonPath)
@@ -19,6 +19,7 @@ const {description, name, version}: {description: string; name: string; version:
 program
   .name(name.replace(/^@[^/]+\//, ''))
   .description(description)
+  .option('-d, --debug', 'Enable debug logging')
   .option('-p, --print', 'Just print the URL')
   .option('-b, --branch', 'Open the branch tree (and not the PR)')
   .option('-t, --timeout <number>', 'Set a custom timeout for HTTP requests')
@@ -33,11 +34,15 @@ const resolvedBaseDir = path.resolve(program.args[0] || '.');
   if (!gitDir) {
     throw new Error(`Could not find a git repository in "${resolvedBaseDir}".`);
   }
+  const openService = new OpenService({
+    ...(program.debug && {debug: program.debug}),
+    ...(program.timeout && {timeout: parseInt(program.timeout, 10)}),
+  });
 
-  let fullUrl = await getFullUrl(gitDir);
+  let fullUrl = await openService.getFullUrl(gitDir);
 
   if (!program.branch) {
-    const pullRequestUrl = await getPullRequest(fullUrl, program.timeout);
+    const pullRequestUrl = await openService.getPullRequestUrl(fullUrl);
     if (pullRequestUrl) {
       fullUrl = pullRequestUrl;
     }
