@@ -3,8 +3,6 @@ import * as path from 'path';
 
 import {GitHubClient} from './GitHubClient';
 
-const gitHubClient = new GitHubClient();
-
 export const parser = {
   fullUrl: new RegExp('^(?:.+?://(?:.+@)?|(?:.+@)?)(.+?)[:/](.+?)(?:.git)?/?$', 'i'),
   gitBranch: new RegExp('ref: refs/heads/(?<branch>.*)$', 'mi'),
@@ -71,8 +69,9 @@ export async function getFullUrl(gitDir: string): Promise<string> {
   return `${parsedUrl}/tree/${gitBranch}`;
 }
 
-export async function getPullRequest(url: string): Promise<string> {
+export async function getPullRequest(url: string, timeout?: number): Promise<string> {
   const match = parser.pullRequest.exec(url);
+  const gitHubClient = new GitHubClient(timeout);
 
   if (!match || !match.groups) {
     const errorMessage = 'Could not convert GitHub URL to pull request.';
@@ -83,14 +82,14 @@ export async function getPullRequest(url: string): Promise<string> {
   let pullRequest;
 
   try {
-    pullRequest = await gitHubClient.getPullRequestByBranch(user, project, branch);
+    const response = await gitHubClient.getPullRequestByBranch(user, project, branch);
+
+    if (response && response._links && response._links.html && response._links.html.href) {
+      pullRequest = response._links.html.href;
+    }
   } catch (error) {
     console.warn(error.message);
   }
 
-  if (!pullRequest) {
-    return '';
-  }
-
-  return pullRequest._links.html.href;
+  return pullRequest || '';
 }
