@@ -1,3 +1,9 @@
+# [2.2.0](https://github.com/ffflorian/gh-open/compare/v2.1.1...v2.2.0) (2019-09-02)
+
+### Features
+
+- Add custom HTTP timeout ([#172](https://github.com/ffflorian/gh-open/issues/172)) ([34b05f7](https://github.com/ffflorian/gh-open/commit/34b05f7))
+
 ## [2.1.1](https://github.com/ffflorian/gh-open/compare/v2.1.0...v2.1.1) (2019-08-28)
 
 ### Bug Fixes
