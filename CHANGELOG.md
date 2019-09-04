@@ -1,3 +1,9 @@
+# [3.1.0](https://github.com/ffflorian/gh-open/compare/v3.0.0...v3.1.0) (2019-09-04)
+
+### Features
+
+- Add debug logging ([#173](https://github.com/ffflorian/gh-open/issues/173)) ([d026546](https://github.com/ffflorian/gh-open/commit/d026546))
+
 # [3.0.0](https://github.com/ffflorian/gh-open/compare/v2.2.0...v3.0.0) (2019-09-04)
 
 ### Features
