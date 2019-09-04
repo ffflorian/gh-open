@@ -17,7 +17,6 @@
     "@semantic-release/changelog": "3.0.4",
     "@semantic-release/git": "7.0.16",
     "@types/jasmine": "3.4.0",
-    "@types/nock": "10.0.3",
     "@types/node": "~12",
     "husky": "3.0.5",
     "jasmine": "3.4.0",
