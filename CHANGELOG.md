@@ -1,3 +1,13 @@
+# [3.0.0](https://github.com/ffflorian/gh-open/compare/v2.2.0...v3.0.0) (2019-09-04)
+
+### Features
+
+- Use class for RepositoryService (BREAKING) ([#176](https://github.com/ffflorian/gh-open/issues/176)) ([93eede4](https://github.com/ffflorian/gh-open/commit/93eede4))
+
+### BREAKING CHANGES
+
+- Repository Service is now a class.
+
 # [2.2.0](https://github.com/ffflorian/gh-open/compare/v2.1.1...v2.2.0) (2019-09-02)
 
 ### Features
