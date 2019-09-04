@@ -65,7 +65,7 @@
       "git add"
     ]
   },
-  "main": "dist/gh-open.js",
+  "main": "dist/index.js",
   "name": "@ffflorian/gh-open",
   "prettier": "@ffflorian/prettier-config",
   "release": {

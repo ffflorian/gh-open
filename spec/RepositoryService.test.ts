@@ -1,6 +1,6 @@
-import {parser} from '../src/gh-open';
+import {parser} from '../src/RepositoryService';
 
-describe('gh-open', () => {
+describe('RepositoryService', () => {
   describe('getFullUrl', () => {
     const normalizedUrl = 'https://github.com/ffflorian/gh-open';
 

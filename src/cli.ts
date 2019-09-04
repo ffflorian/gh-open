@@ -6,7 +6,7 @@ import * as fs from 'fs';
 import open = require('open');
 import * as path from 'path';
 
-import {getFullUrl, getPullRequest} from './gh-open';
+import {getFullUrl, getPullRequest} from './RepositoryService';
 
 const defaultPackageJsonPath = path.join(__dirname, 'package.json');
 const packageJsonPath = fs.existsSync(defaultPackageJsonPath)
