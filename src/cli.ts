@@ -6,7 +6,7 @@ import * as fs from 'fs';
 import open = require('open');
 import * as path from 'path';
 
-import {getFullUrl, getPullRequest} from './RepositoryService';
+import {RepositoryService} from './RepositoryService';
 
 const defaultPackageJsonPath = path.join(__dirname, 'package.json');
 const packageJsonPath = fs.existsSync(defaultPackageJsonPath)
@@ -29,15 +29,17 @@ program
 const resolvedBaseDir = path.resolve(program.args[0] || '.');
 
 (async () => {
+  const repositoryService = new RepositoryService();
+
   const gitDir = await findUp('.git', {cwd: resolvedBaseDir, type: 'directory'});
   if (!gitDir) {
     throw new Error(`Could not find a git repository in "${resolvedBaseDir}".`);
   }
 
-  let fullUrl = await getFullUrl(gitDir);
+  let fullUrl = await repositoryService.getFullUrl(gitDir);
 
   if (!program.branch) {
-    const pullRequestUrl = await getPullRequest(fullUrl, program.timeout);
+    const pullRequestUrl = await repositoryService.getPullRequest(fullUrl, program.timeout);
     if (pullRequestUrl) {
       fullUrl = pullRequestUrl;
     }
