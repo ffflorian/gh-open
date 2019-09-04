@@ -35,15 +35,15 @@ const resolvedBaseDir = path.resolve(program.args[0] || '.');
     throw new Error(`Could not find a git repository in "${resolvedBaseDir}".`);
   }
 
-  const openService = new RepositoryService({
+  const repositoryService = new RepositoryService({
     ...(program.debug && {debug: program.debug}),
     ...(program.timeout && {timeout: parseInt(program.timeout, 10)}),
   });
 
-  let fullUrl = await openService.getFullUrl(gitDir);
+  let fullUrl = await repositoryService.getFullUrl(gitDir);
 
   if (!program.branch) {
-    const pullRequestUrl = await openService.getPullRequestUrl(fullUrl);
+    const pullRequestUrl = await repositoryService.getPullRequestUrl(fullUrl);
     if (pullRequestUrl) {
       fullUrl = pullRequestUrl;
     }
