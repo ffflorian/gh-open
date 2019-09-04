@@ -19,6 +19,7 @@ const {description, name, version}: {description: string; name: string; version:
 program
   .name(name.replace(/^@[^/]+\//, ''))
   .description(description)
+  .option('-d, --debug', 'Enable debug logging')
   .option('-p, --print', 'Just print the URL')
   .option('-b, --branch', 'Open the branch tree (and not the PR)')
   .option('-t, --timeout <number>', 'Set a custom timeout for HTTP requests')
@@ -29,17 +30,20 @@ program
 const resolvedBaseDir = path.resolve(program.args[0] || '.');
 
 (async () => {
-  const repositoryService = new RepositoryService();
-
   const gitDir = await findUp('.git', {cwd: resolvedBaseDir, type: 'directory'});
   if (!gitDir) {
     throw new Error(`Could not find a git repository in "${resolvedBaseDir}".`);
   }
 
+  const repositoryService = new RepositoryService({
+    ...(program.debug && {debug: program.debug}),
+    ...(program.timeout && {timeout: parseInt(program.timeout, 10)}),
+  });
+
   let fullUrl = await repositoryService.getFullUrl(gitDir);
 
   if (!program.branch) {
-    const pullRequestUrl = await repositoryService.getPullRequest(fullUrl, program.timeout);
+    const pullRequestUrl = await repositoryService.getPullRequestUrl(fullUrl);
     if (pullRequestUrl) {
       fullUrl = pullRequestUrl;
     }

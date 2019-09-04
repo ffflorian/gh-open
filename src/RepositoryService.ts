@@ -1,9 +1,18 @@
 import {promises as fsAsync} from 'fs';
+import * as logdown from 'logdown';
 import * as path from 'path';
 
 import {GitHubClient} from './GitHubClient';
 
+export interface Options {
+  debug?: boolean;
+  timeout?: number;
+}
+
 export class RepositoryService {
+  private readonly gitHubClient: GitHubClient;
+  private readonly logger: logdown.Logger;
+  private readonly options: Required<Options>;
   private readonly parser = {
     fullUrl: new RegExp('^(?:.+?://(?:.+@)?|(?:.+@)?)(.+?)[:/](.+?)(?:.git)?/?$', 'i'),
     gitBranch: new RegExp('ref: refs/heads/(?<branch>.*)$', 'mi'),
@@ -11,9 +20,17 @@ export class RepositoryService {
     rawUrl: new RegExp('.*url = (?<rawUrl>.*)', 'mi'),
   };
 
-  constructor() {}
+  constructor(options?: Options) {
+    this.options = {debug: false, timeout: 2000, ...options};
+    this.gitHubClient = new GitHubClient(this.options.timeout);
+    this.logger = logdown('gh-open', {
+      logger: console,
+      markdown: false,
+    });
+    this.logger.state.isEnabled = this.options.debug;
+  }
 
-  async getFullUrl(gitDir: string): Promise<string> {
+  async getFullUrl(gitDir: string, debug?: boolean): Promise<string> {
     const rawUrl = await this.parseGitConfig(gitDir);
     const gitBranch = await this.parseGitBranch(gitDir);
     const match = this.parser.fullUrl.exec(rawUrl);
@@ -25,12 +42,13 @@ export class RepositoryService {
 
     const parsedUrl = rawUrl.replace(this.parser.fullUrl, 'https://$1/$2');
 
+    this.logger.info('Found parsed URL', {parsedUrl});
+
     return `${parsedUrl}/tree/${gitBranch}`;
   }
 
-  async getPullRequest(url: string, timeout?: number): Promise<string> {
+  async getPullRequestUrl(url: string): Promise<string | undefined> {
     const match = this.parser.pullRequest.exec(url);
-    const gitHubClient = new GitHubClient(timeout);
 
     if (!match || !match.groups) {
       const errorMessage = 'Could not convert GitHub URL to pull request.';
@@ -38,19 +56,20 @@ export class RepositoryService {
     }
 
     const {user, project, branch} = match.groups;
-    let pullRequest;
 
     try {
-      const response = await gitHubClient.getPullRequestByBranch(user, project, branch);
+      const response = await this.gitHubClient.getPullRequestByBranch(user, project, branch);
 
       if (response && response._links && response._links.html && response._links.html.href) {
-        pullRequest = response._links.html.href;
+        const pullRequestUrl = response._links.html.href;
+        this.logger.info('Got pull request URL', {pullRequestUrl});
+        return pullRequestUrl;
       }
     } catch (error) {
-      console.warn(error.message);
+      this.logger.warn(`Request failed: "${error.message}"`);
     }
 
-    return pullRequest || '';
+    return;
   }
 
   async parseGitBranch(gitDir: string): Promise<string> {
@@ -60,6 +79,7 @@ export class RepositoryService {
 
     try {
       gitHead = await fsAsync.readFile(gitHeadFile, 'utf-8');
+      this.logger.info('Read git head file', {gitHead});
     } catch (error) {
       const errorMessage = `Could not find git HEAD file in "${gitDir}".`;
       throw new Error(errorMessage);
@@ -82,6 +102,7 @@ export class RepositoryService {
 
     try {
       gitConfig = await fsAsync.readFile(gitConfigFile, 'utf-8');
+      this.logger.info('Read git config file', {gitConfigFile});
     } catch (error) {
       const errorMessage = `Could not find git config file in "${gitDir}".`;
       throw new Error(errorMessage);
@@ -94,6 +115,10 @@ export class RepositoryService {
       throw new Error(errorMessage);
     }
 
-    return match.groups.rawUrl;
+    const rawUrl = match.groups.rawUrl;
+
+    this.logger.info('Found raw URL', {rawUrl});
+
+    return rawUrl;
   }
 }
