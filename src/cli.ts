@@ -6,7 +6,7 @@ import * as fs from 'fs';
 import open = require('open');
 import * as path from 'path';
 
-import {OpenService} from './OpenService';
+import {RepositoryService} from './RepositoryService';
 
 const defaultPackageJsonPath = path.join(__dirname, 'package.json');
 const packageJsonPath = fs.existsSync(defaultPackageJsonPath)
@@ -34,7 +34,8 @@ const resolvedBaseDir = path.resolve(program.args[0] || '.');
   if (!gitDir) {
     throw new Error(`Could not find a git repository in "${resolvedBaseDir}".`);
   }
-  const openService = new OpenService({
+
+  const openService = new RepositoryService({
     ...(program.debug && {debug: program.debug}),
     ...(program.timeout && {timeout: parseInt(program.timeout, 10)}),
   });

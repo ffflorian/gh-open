@@ -1,15 +1,15 @@
-import {OpenService} from '../src/OpenService';
+import {RepositoryService} from '../src/RepositoryService';
 
-describe('gh-open', () => {
-  const openService = new OpenService();
+describe('RepositoryService', () => {
+  const repositoryService = new RepositoryService();
 
   describe('getFullUrl', () => {
     const normalizedUrl = 'https://github.com/ffflorian/gh-open';
 
     const testRegex = (str: string) => {
-      const match = openService['parser'].fullUrl.exec(str);
+      const match = repositoryService['parser'].fullUrl.exec(str);
       expect(match![0]).toEqual(jasmine.any(String));
-      const replaced = str.replace(openService['parser'].fullUrl, 'https://$1/$2');
+      const replaced = str.replace(repositoryService['parser'].fullUrl, 'https://$1/$2');
       expect(replaced).toBe(normalizedUrl);
     };
 
@@ -53,7 +53,7 @@ describe('gh-open', () => {
     const rawUrl = 'git@github.com:ffflorian/gh-open.git';
 
     const testRegex = (str: string) => {
-      const match = openService['parser'].rawUrl.exec(str);
+      const match = repositoryService['parser'].rawUrl.exec(str);
       expect(match!.groups!.rawUrl).toBe(rawUrl);
     };
 
@@ -69,7 +69,7 @@ describe('gh-open', () => {
 
     describe('parseGitBranch', () => {
       const testRegex = (str: string, result: string) => {
-        const match = openService['parser'].gitBranch.exec(str);
+        const match = repositoryService['parser'].gitBranch.exec(str);
         expect(match!.groups!.branch).toBe(result);
       };
 

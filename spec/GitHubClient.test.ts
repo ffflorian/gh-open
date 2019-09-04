@@ -8,7 +8,7 @@ describe('GitHubClient', () => {
       nock('https://api.github.com')
         .get(/repos\/.*\/.*\/pulls/)
         .query(true)
-        .delay(10000)
+        .delay(10_000)
         .reply(200);
 
       const gitHubClient = new GitHubClient(500);

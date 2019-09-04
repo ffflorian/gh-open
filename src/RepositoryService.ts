@@ -9,7 +9,7 @@ export interface Options {
   timeout?: number;
 }
 
-export class OpenService {
+export class RepositoryService {
   private readonly gitHubClient: GitHubClient;
   private readonly logger: logdown.Logger;
   private readonly options: Required<Options>;
