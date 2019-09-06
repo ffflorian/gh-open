@@ -1,3 +1,9 @@
+## [3.1.1](https://github.com/ffflorian/gh-open/compare/v3.1.0...v3.1.1) (2019-09-06)
+
+### Bug Fixes
+
+- Use postversion on publishing ([2688019](https://github.com/ffflorian/gh-open/commit/2688019))
+
 # [3.1.0](https://github.com/ffflorian/gh-open/compare/v3.0.0...v3.1.0) (2019-09-04)
 
 ### Features
