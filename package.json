@@ -85,7 +85,7 @@
     "lint:other": "yarn prettier --list-different",
     "lint:ts": "tslint --project tsconfig.json",
     "lint:ts:spec": "tslint --project tsconfig.jasmine.json",
-    "postpublish": "node ../node_modules/publish-flat/cli-copy.js -i package.json -o ../package.json version",
+    "postversion": "node ../node_modules/publish-flat/cli-copy.js -i package.json -o ../package.json version",
     "prettier": "prettier \"*.{json,md,yml}\"",
     "release": "semantic-release",
     "start": "ts-node src/cli.ts -d",
