@@ -54,7 +54,7 @@ const resolvedBaseDir = path.resolve(program.args[0] || '.');
     return;
   }
 
-  await open(fullUrl);
+  await open(fullUrl, {url: true});
 })().catch(error => {
   console.error(error.message);
   process.exit(1);
