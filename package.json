@@ -4,7 +4,7 @@
     "gh-open": "dist/cli.js"
   },
   "dependencies": {
-    "axios": "0.19.1",
+    "axios": "0.19.2",
     "commander": "4.1.0",
     "find-up": "4.1.0",
     "logdown": "3.3.0",
