@@ -14,7 +14,7 @@ const packageJsonPath = fs.existsSync(defaultPackageJsonPath)
   : path.join(__dirname, '../package.json');
 
 const packageJson = fs.readFileSync(packageJsonPath, 'utf-8');
-const {description, name, version}: {description: string; name: string; version: string} = JSON.parse(packageJson);
+const {description, name, version} = JSON.parse(packageJson);
 
 program
   .name(name.replace(/^@[^/]+\//, ''))
@@ -36,8 +36,8 @@ const resolvedBaseDir = path.resolve(program.args[0] || '.');
   }
 
   const repositoryService = new RepositoryService({
-    ...(program.debug && {debug: program.debug}),
-    ...(program.timeout && {timeout: parseInt(program.timeout, 10)}),
+    ...(program.debug ?? {debug: program.debug}),
+    ...(program.timeout ?? {timeout: parseInt(program.timeout, 10)}),
   });
 
   let fullUrl = await repositoryService.getFullUrl(gitDir);
@@ -51,10 +51,9 @@ const resolvedBaseDir = path.resolve(program.args[0] || '.');
 
   if (program.print) {
     console.info(fullUrl);
-    return;
+  } else {
+    await open(fullUrl, {url: true});
   }
-
-  await open(fullUrl, {url: true});
 })().catch(error => {
   console.error(error.message);
   process.exit(1);
