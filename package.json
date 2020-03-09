@@ -7,7 +7,7 @@
     "axios": "0.19.2",
     "commander": "4.1.1",
     "find-up": "4.1.0",
-    "logdown": "3.3.0",
+    "logdown": "3.3.1",
     "open": "7.0.2"
   },
   "description": "Open a GitHub repository in your browser. Opens pull requests by default.",
