@@ -4,7 +4,7 @@ import {GitHubClient, PullRequest} from '../src/GitHubClient';
 
 const TEN_SECONDS_IN_MILLIS = 10_000;
 const HALF_SECOND_IN_MILLIS = 500;
-const CODE_OK = 200;
+const HTTP_CODE_OK = 200;
 
 describe('GitHubClient', () => {
   describe('getPullRequests', () => {
@@ -13,7 +13,7 @@ describe('GitHubClient', () => {
         .get(/repos\/.*\/.*\/pulls/)
         .query(true)
         .delay(TEN_SECONDS_IN_MILLIS)
-        .reply(CODE_OK);
+        .reply(HTTP_CODE_OK);
 
       const gitHubClient = new GitHubClient(HALF_SECOND_IN_MILLIS);
       try {
@@ -45,7 +45,7 @@ describe('GitHubClient', () => {
       nock('https://api.github.com')
         .get(/repos\/.*\/.*\/pulls/)
         .query(true)
-        .reply(CODE_OK, exampleData);
+        .reply(HTTP_CODE_OK, exampleData);
 
       const gitHubClient = new GitHubClient();
       const result = await gitHubClient.getPullRequestByBranch('user', 'repository', 'branch-name');
