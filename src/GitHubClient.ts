@@ -11,10 +11,12 @@ export interface PullRequest {
   };
 }
 
+const TWO_SECONDS_IN_MILLIS = 2000;
+
 export class GitHubClient {
   private readonly apiClient: AxiosInstance;
 
-  constructor(timeout: number = 2000) {
+  constructor(timeout: number = TWO_SECONDS_IN_MILLIS) {
     this.apiClient = axios.create({baseURL: 'https://api.github.com', timeout});
   }
 
