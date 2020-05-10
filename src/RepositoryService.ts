@@ -30,7 +30,7 @@ export class RepositoryService {
     this.logger.state.isEnabled = this.options.debug;
   }
 
-  async getFullUrl(gitDir: string, debug?: boolean): Promise<string> {
+  async getFullUrl(gitDir: string): Promise<string> {
     const rawUrl = await this.parseGitConfig(gitDir);
     const gitBranch = await this.parseGitBranch(gitDir);
     const match = this.parser.fullUrl.exec(rawUrl);
@@ -47,7 +47,7 @@ export class RepositoryService {
     return `${parsedUrl}/tree/${gitBranch}`;
   }
 
-  async getPullRequestUrl(url: string): Promise<string | undefined> {
+  async getPullRequestUrl(url: string): Promise<string | void> {
     const match = this.parser.pullRequest.exec(url);
 
     if (!match || !match.groups) {
@@ -68,8 +68,6 @@ export class RepositoryService {
     } catch (error) {
       this.logger.warn(`Request failed: "${error.message}"`);
     }
-
-    return;
   }
 
   async parseGitBranch(gitDir: string): Promise<string> {
