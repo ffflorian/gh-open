@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import * as program from 'commander';
+import * as commander from 'commander';
 import * as findUp from 'find-up';
 import * as fs from 'fs';
 import open = require('open');
@@ -16,7 +16,7 @@ const packageJsonPath = fs.existsSync(defaultPackageJsonPath)
 const packageJson = fs.readFileSync(packageJsonPath, 'utf-8');
 const {description, name, version}: {description: string; name: string; version: string} = JSON.parse(packageJson);
 
-program
+commander
   .name(name.replace(/^@[^/]+\//, ''))
   .description(description)
   .option('-d, --debug', 'Enable debug logging')
@@ -27,7 +27,7 @@ program
   .version(version, '-v, --version')
   .parse(process.argv);
 
-const resolvedBaseDir = path.resolve(program.args[0] || '.');
+const resolvedBaseDir = path.resolve(commander.args[0] || '.');
 
 (async () => {
   const gitDir = await findUp('.git', {cwd: resolvedBaseDir, type: 'directory'});
@@ -36,20 +36,20 @@ const resolvedBaseDir = path.resolve(program.args[0] || '.');
   }
 
   const repositoryService = new RepositoryService({
-    ...(program.debug && {debug: program.debug}),
-    ...(program.timeout && {timeout: parseInt(program.timeout, 10)}),
+    ...(commander.debug && {debug: commander.debug}),
+    ...(commander.timeout && {timeout: parseInt(commander.timeout, 10)}),
   });
 
   let fullUrl = await repositoryService.getFullUrl(gitDir);
 
-  if (!program.branch) {
+  if (!commander.branch) {
     const pullRequestUrl = await repositoryService.getPullRequestUrl(fullUrl);
     if (pullRequestUrl) {
       fullUrl = pullRequestUrl;
     }
   }
 
-  if (program.print) {
+  if (commander.print) {
     console.info(fullUrl);
     return;
   }
