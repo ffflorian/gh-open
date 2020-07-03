@@ -61,9 +61,9 @@ describe('RepositoryService', () => {
       const gitConfig = `[remote "origin"]
     url = git@github.com:ffflorian/gh-open.git
     fetch = +refs/heads/*:refs/remotes/origin/*
-[branch "master"]
+[branch "main"]
     remote = origin
-    merge = refs/heads/master`;
+    merge = refs/heads/main`;
       testRegex(gitConfig);
     });
 
@@ -73,9 +73,9 @@ describe('RepositoryService', () => {
         expect(match!.groups!.branch).toBe(result);
       };
 
-      it('detects the master branch', () => {
-        const rawBranch = 'master';
-        const gitHead = 'ref: refs/heads/master\n';
+      it('detects the main branch', () => {
+        const rawBranch = 'main';
+        const gitHead = 'ref: refs/heads/main\n';
         testRegex(gitHead, rawBranch);
       });
 
