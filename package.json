@@ -36,7 +36,7 @@
     "husky": "4.2.5",
     "jasmine": "3.6.1",
     "lint-staged": "10.2.11",
-    "nock": "13.0.2",
+    "nock": "13.0.3",
     "prettier": "2.0.5",
     "publish-flat": "1.4.0",
     "rimraf": "3.0.2",
