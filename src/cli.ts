@@ -29,33 +29,36 @@ commander
 
 const resolvedBaseDir = path.resolve(commander.args[0] || '.');
 
-(async () => {
-  const gitDir = await findUp('.git', {cwd: resolvedBaseDir, type: 'directory'});
-  if (!gitDir) {
-    throw new Error(`Could not find a git repository in "${resolvedBaseDir}".`);
-  }
-
-  const repositoryService = new RepositoryService({
-    ...(commander.debug && {debug: commander.debug}),
-    ...(commander.timeout && {timeout: parseInt(commander.timeout, 10)}),
-  });
-
-  let fullUrl = await repositoryService.getFullUrl(gitDir);
-
-  if (!commander.branch) {
-    const pullRequestUrl = await repositoryService.getPullRequestUrl(fullUrl);
-    if (pullRequestUrl) {
-      fullUrl = pullRequestUrl;
+void (async () => {
+  try {
+    const gitDir = await findUp('.git', {cwd: resolvedBaseDir, type: 'directory'});
+    if (!gitDir) {
+      throw new Error(`Could not find a git repository in "${resolvedBaseDir}".`);
     }
-  }
 
-  if (commander.print) {
-    console.info(fullUrl);
-    return;
-  }
+    const repositoryService = new RepositoryService({
+      ...(commander.debug && {debug: commander.debug}),
+      ...(commander.timeout && {timeout: parseInt(commander.timeout, 10)}),
+    });
 
-  await open(fullUrl, {url: true});
-})().catch(error => {
-  console.error(error.message);
-  process.exit(1);
-});
+    let fullUrl = await repositoryService.getFullUrl(gitDir);
+
+    if (!commander.branch) {
+      const pullRequestUrl = await repositoryService.getPullRequestUrl(fullUrl);
+      if (pullRequestUrl) {
+        fullUrl = pullRequestUrl;
+      }
+    }
+
+    if (commander.print) {
+      console.info(fullUrl);
+      return;
+    }
+
+    await open(fullUrl, {url: true});
+    process.exit();
+  } catch (error) {
+    console.error(error.message);
+    process.exit(1);
+  }
+})();
