@@ -1,4 +1,4 @@
-import axios, {AxiosInstance} from 'axios';
+import got, {Got} from 'got';
 
 export interface PullRequest {
   _links: {
@@ -14,10 +14,10 @@ export interface PullRequest {
 const TWO_SECONDS_IN_MILLIS = 2000;
 
 export class GitHubClient {
-  private readonly apiClient: AxiosInstance;
+  private readonly apiClient: Got;
 
   constructor(timeout: number = TWO_SECONDS_IN_MILLIS) {
-    this.apiClient = axios.create({baseURL: 'https://api.github.com', timeout});
+    this.apiClient = got.extend({prefixUrl: 'https://api.github.com', timeout});
   }
 
   async getPullRequestByBranch(user: string, repository: string, branch: string): Promise<PullRequest | undefined> {
@@ -31,12 +31,14 @@ export class GitHubClient {
   async getPullRequests(user: string, repository: string): Promise<PullRequest[]> {
     const resourceUrl = `repos/${user}/${repository}/pulls`;
 
-    const response = await this.apiClient.get(resourceUrl, {
-      params: {
-        state: 'open',
-      },
-    });
+    const response = await this.apiClient
+      .get(resourceUrl, {
+        searchParams: {
+          state: 'open',
+        },
+      })
+      .json<PullRequest[]>();
 
-    return response.data;
+    return response;
   }
 }
