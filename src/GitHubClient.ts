@@ -26,10 +26,12 @@ export class GitHubClient {
   }
 
   /**
-   * @see https://developer.github.com/v3/pulls/#list-pull-requests
+   * @param owner The repository owner
+   * @param repository The repository name
+   * @see https://docs.github.com/v3/pulls/#list-pull-requests
    */
-  getPullRequests(user: string, repository: string): Promise<PullRequest[]> {
-    const resourceUrl = `repos/${user}/${repository}/pulls`;
+  getPullRequests(owner: string, repository: string): Promise<PullRequest[]> {
+    const resourceUrl = `repos/${owner}/${repository}/pulls`;
 
     const request = this.apiClient.get(resourceUrl, {
       searchParams: {
