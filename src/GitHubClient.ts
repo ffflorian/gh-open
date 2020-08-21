@@ -28,17 +28,15 @@ export class GitHubClient {
   /**
    * @see https://developer.github.com/v3/pulls/#list-pull-requests
    */
-  async getPullRequests(user: string, repository: string): Promise<PullRequest[]> {
+  getPullRequests(user: string, repository: string): Promise<PullRequest[]> {
     const resourceUrl = `repos/${user}/${repository}/pulls`;
 
-    const response = await this.apiClient
-      .get(resourceUrl, {
-        searchParams: {
-          state: 'open',
-        },
-      })
-      .json<PullRequest[]>();
+    const request = this.apiClient.get(resourceUrl, {
+      searchParams: {
+        state: 'open',
+      },
+    });
 
-    return response;
+    return request.json<PullRequest[]>();
   }
 }
