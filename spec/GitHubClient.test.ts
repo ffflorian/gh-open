@@ -13,14 +13,15 @@ describe('GitHubClient', () => {
         .get(/repos\/.*\/.*\/pulls/)
         .query(true)
         .delay(TEN_SECONDS_IN_MILLIS)
-        .reply(HTTP_STATUS.OK);
+        .reply(HTTP_STATUS.OK)
+        .persist();
 
       const gitHubClient = new GitHubClient(HALF_SECOND_IN_MILLIS);
       try {
         await gitHubClient.getPullRequests('user', 'repository');
         fail('Should not have resolved');
       } catch (error) {
-        expect(error.message).toBe('timeout of 500ms exceeded');
+        expect(error.message).toContain(`${HALF_SECOND_IN_MILLIS}ms`);
       } finally {
         nock.cleanAll();
       }
