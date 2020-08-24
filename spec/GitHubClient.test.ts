@@ -1,5 +1,5 @@
 import * as nock from 'nock';
-import * as HTTP_STATUS from 'http-status-codes';
+import {StatusCodes as HTTP_STATUS} from 'http-status-codes';
 
 import {GitHubClient, PullRequest} from '../src/GitHubClient';
 
