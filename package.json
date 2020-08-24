@@ -8,7 +8,7 @@
     "commander": "6.0.0",
     "find-up": "5.0.0",
     "logdown": "3.3.1",
-    "open": "7.1.0"
+    "open": "7.2.0"
   },
   "description": "Open a GitHub repository in your browser. Opens pull requests by default.",
   "devDependencies": {
