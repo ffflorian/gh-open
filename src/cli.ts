@@ -28,6 +28,7 @@ commander
   .parse(process.argv);
 
 const resolvedBaseDir = path.resolve(commander.args[0] || '.');
+const commanderOptions = commander.opts();
 
 void (async () => {
   try {
@@ -37,20 +38,20 @@ void (async () => {
     }
 
     const repositoryService = new RepositoryService({
-      ...(commander.debug && {debug: commander.debug}),
-      ...(commander.timeout && {timeout: parseInt(commander.timeout, 10)}),
+      ...(commanderOptions.debug && {debug: commanderOptions.debug}),
+      ...(commanderOptions.timeout && {timeout: parseInt(commanderOptions.timeout, 10)}),
     });
 
     let fullUrl = await repositoryService.getFullUrl(gitDir);
 
-    if (!commander.branch) {
+    if (!commanderOptions.branch) {
       const pullRequestUrl = await repositoryService.getPullRequestUrl(fullUrl);
       if (pullRequestUrl) {
         fullUrl = pullRequestUrl;
       }
     }
 
-    if (commander.print) {
+    if (commanderOptions.print) {
       console.info(fullUrl);
       return;
     }
