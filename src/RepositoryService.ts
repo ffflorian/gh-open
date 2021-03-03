@@ -77,6 +77,7 @@ export class RepositoryService {
 
     try {
       gitHead = await fsAsync.readFile(gitHeadFile, 'utf-8');
+      gitHead = gitHead.trim();
       this.logger.info('Read git head file', {gitHead});
     } catch (error) {
       const errorMessage = `Could not find git HEAD file in "${gitDir}".`;
