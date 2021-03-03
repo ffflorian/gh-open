@@ -1,3 +1,10 @@
+## [3.1.3](https://github.com/ffflorian/gh-open/compare/v3.1.2...v3.1.3) (2021-03-03)
+
+
+### Bug Fixes
+
+* Better error messages ([0cc276b](https://github.com/ffflorian/gh-open/commit/0cc276b60a336f0a1c22b3d42c9b47a231c95da8))
+
 ## [3.1.2](https://github.com/ffflorian/gh-open/compare/v3.1.1...v3.1.2) (2021-03-03)
 
 
