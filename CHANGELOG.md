@@ -1,3 +1,10 @@
+## [3.1.2](https://github.com/ffflorian/gh-open/compare/v3.1.1...v3.1.2) (2021-03-03)
+
+
+### Bug Fixes
+
+* Trim gitHead file content ([1db7b34](https://github.com/ffflorian/gh-open/commit/1db7b34180e1937e2bb83ccc3a87d04919a4d85f))
+
 ## [3.1.1](https://github.com/ffflorian/gh-open/compare/v3.1.0...v3.1.1) (2019-09-06)
 
 ### Bug Fixes
