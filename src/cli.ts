@@ -56,7 +56,7 @@ void (async () => {
       return;
     }
 
-    await open(fullUrl, {url: true});
+    await open(fullUrl);
     process.exit();
   } catch (error) {
     console.error(error.message);
