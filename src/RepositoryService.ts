@@ -51,7 +51,7 @@ export class RepositoryService {
     const match = this.parser.pullRequest.exec(url);
 
     if (!match || !match.groups) {
-      const errorMessage = 'Could not convert GitHub URL to pull request.';
+      const errorMessage = `Could not convert GitHub URL "${url}" to pull request`;
       throw new Error(errorMessage);
     }
 
@@ -87,7 +87,7 @@ export class RepositoryService {
     const match = this.parser.gitBranch.exec(gitHead);
 
     if (!match || !match.groups) {
-      const errorMessage = 'No branch found in git HEAD file.';
+      const errorMessage = `No branch found in git HEAD file: "${gitHead}"`;
       throw new Error(errorMessage);
     }
 
@@ -97,20 +97,21 @@ export class RepositoryService {
   async parseGitConfig(gitDir: string): Promise<string> {
     const gitConfigFile = path.join(gitDir, 'config');
 
-    let gitConfig;
+    let gitConfig: string;
 
     try {
       gitConfig = await fsAsync.readFile(gitConfigFile, 'utf-8');
+      gitConfig = gitConfig.trim();
       this.logger.info('Read git config file', {gitConfigFile});
     } catch (error) {
-      const errorMessage = `Could not find git config file in "${gitDir}".`;
+      const errorMessage = `Could not find git config file: "${gitConfigFile}"`;
       throw new Error(errorMessage);
     }
 
     const match = this.parser.rawUrl.exec(gitConfig);
 
     if (!match || !match.groups) {
-      const errorMessage = 'No URL found in git config file.';
+      const errorMessage = `No URL found in git config file: "${gitConfigFile}"`;
       throw new Error(errorMessage);
     }
 
