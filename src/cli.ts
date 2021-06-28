@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import * as commander from 'commander';
+import {program as commander} from 'commander';
 import * as findUp from 'find-up';
 import * as fs from 'fs';
 import open = require('open');
