@@ -20,7 +20,7 @@ describe('GitHubClient', () => {
         await gitHubClient.getPullRequests('user', 'repository');
         fail('Should not have resolved');
       } catch (error) {
-        expect(error.message).toBe('timeout of 500ms exceeded');
+        expect((error as Error).message).toBe('timeout of 500ms exceeded');
       } finally {
         nock.cleanAll();
       }

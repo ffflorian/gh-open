@@ -66,7 +66,7 @@ export class RepositoryService {
         return pullRequestUrl;
       }
     } catch (error) {
-      this.logger.warn(`Request failed: "${error.message}"`);
+      this.logger.warn(`Request failed: "${(error as Error).message}"`);
     }
   }
 
