@@ -13,7 +13,10 @@ updates:
     ignore:
       - dependency-name: '@types/node'
         versions:
-          - '> 16.x'
+          - '> 16.a'
       - dependency-name: 'husky'
         versions:
-          - '>= 5.x'
+          - '>= 5.a'
+      - dependency-name: 'find-up'
+        versions:
+          - '>= 6.a'
