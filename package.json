@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "axios": "0.21.4",
-    "commander": "8.1.0",
+    "commander": "8.2.0",
     "find-up": "5.0.0",
     "logdown": "3.3.1",
     "open": "8.2.1"
