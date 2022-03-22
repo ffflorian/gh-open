@@ -71,7 +71,7 @@
     ]
   },
   "main": "dist/index.js",
-  "name": "@ffflorian/gh-open",
+  "name": "gh-open",
   "prettier": "@ffflorian/prettier-config",
   "release": {
     "extends": "@ffflorian/semantic-release-config"
