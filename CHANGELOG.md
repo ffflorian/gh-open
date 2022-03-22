@@ -1,3 +1,10 @@
+# [3.2.0](https://github.com/ffflorian/gh-open/compare/v3.1.3...v3.2.0) (2022-03-22)
+
+
+### Features
+
+* Rename npm package to gh-open ([4ee8143](https://github.com/ffflorian/gh-open/commit/4ee8143627c8bc3de2c2cbb57d5d03651fd7c2e6))
+
 ## [3.1.3](https://github.com/ffflorian/gh-open/compare/v3.1.2...v3.1.3) (2021-03-03)
 
 
