@@ -1,3 +1,10 @@
+## [3.1.4](https://github.com/ffflorian/gh-open/compare/v3.1.3...v3.1.4) (2022-03-22)
+
+
+### Bug Fixes
+
+* Update dependencies ([d10c1b2](https://github.com/ffflorian/gh-open/commit/d10c1b2a70f5982f3973fe5b4028be2f2d8ba8ba))
+
 ## [3.1.3](https://github.com/ffflorian/gh-open/compare/v3.1.2...v3.1.3) (2021-03-03)
 
 
