@@ -36,7 +36,7 @@
     "http-status-codes": "2.2.0",
     "husky": "4.3.8",
     "jasmine": "4.2.1",
-    "lint-staged": "13.0.2",
+    "lint-staged": "13.0.3",
     "nock": "13.2.7",
     "prettier": "2.7.1",
     "publish-flat": "1.4.1",
