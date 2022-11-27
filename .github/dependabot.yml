@@ -17,3 +17,10 @@ updates:
       - dependency-name: 'find-up'
         versions:
           - '>= 6.a'
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    open-pull-requests-limit: 99
+    assignees:
+      - ffflorian
