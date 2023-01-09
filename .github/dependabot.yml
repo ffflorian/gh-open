@@ -13,10 +13,10 @@ updates:
     ignore:
       - dependency-name: '@types/node'
         versions:
-          - '> 16.a'
+          - '> 18.x'
       - dependency-name: 'find-up'
         versions:
-          - '>= 6.a'
+          - '>= 6.x'
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
